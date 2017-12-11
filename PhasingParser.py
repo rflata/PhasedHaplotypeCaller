@@ -1,5 +1,7 @@
+import sys
 import numpy as np
-with open('/mnt/d/Linux/SLCO1B1/1000_Genomes_Data/NA07019.phased.vcf') as vcf:
+file=sys.argv[1]
+with open(file) as vcf:
     hap1 = []
     hap2 = []
     for line in vcf:
