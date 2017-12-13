@@ -1,6 +1,7 @@
 import parsevcf as pv
 import argparse as ag
 import haplotypecaller as hc
+import outputhaplotype as oh
 
 def main():
     parser = ag.ArgumentParser(description ='List of arguments')
@@ -15,5 +16,8 @@ def main():
     #print(vcfparse.sample)
     call = hc.haplotypecaller('SLCO1B1')
     call.buildhaplotype(vcfparse.get_hap1(),vcfparse.get_hap2())
+    out = oh.output(call,vcfparse.sample)
+    regions = out.loadregions()
+    out.tofile(regions)
 if __name__ == "__main__":main()
 

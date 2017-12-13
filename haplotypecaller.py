@@ -31,12 +31,12 @@ class haplotypecaller:
                     if percentmatchhap1temp > self.percentmatchhap1[self.callhaplotypehap1] and len(intersecthap1) > len(self.hap1call[self.callhaplotypehap1]):
                         #print(locationsplit[0])
                         self.hap1call.clear()
-                        self.hap1call[locationsplit[0]] = intersecthap1
+                        self.hap1call[locationsplit[0]] = intersecthap1.tolist()
                         self.callhaplotypehap1 = locationsplit[0]
                         self.percentmatchhap1.clear()
                         self.percentmatchhap1[locationsplit[0]] = percentmatchhap1temp
                         self.difhap1.clear()
-                        self.difhap1[locationsplit[0]] = np.setdiff1d(hap1,snps)
+                        self.difhap1[locationsplit[0]] = np.setdiff1d(hap1,snps).tolist()
                         #print(self.callhaplotypehap1)
                         for key, value in self.hap1call.items():
                             print('Both Greater')
@@ -44,20 +44,20 @@ class haplotypecaller:
                     elif percentmatchhap1temp == self.percentmatchhap1[self.callhaplotypehap1] and len(intersecthap1) > len(self.hap1call[self.callhaplotypehap1]):
                         #print(locationsplit[0])
                         self.hap1call.clear()
-                        self.hap1call[locationsplit[0]] = intersecthap1
+                        self.hap1call[locationsplit[0]] = intersecthap1.tolist()
                         self.callhaplotypehap1 = locationsplit[0]
                         self.percentmatchhap1.clear()
                         self.percentmatchhap1[locationsplit[0]] = percentmatchhap1temp
                         self.difhap1.clear()
-                        self.difhap1[locationsplit[0]] = np.setdiff1d(hap1,snps)
+                        self.difhap1[locationsplit[0]] = np.setdiff1d(hap1,snps).tolist()
                         #print(self.callhaplotypehap1)
                         print('Length Greater')
                         for key, value in self.hap1call.items():
                             print(key,value)
                     elif percentmatchhap1temp == self.percentmatchhap1[self.callhaplotypehap1] and len(intersecthap1) == len(self.hap1call[self.callhaplotypehap1]):
-                        self.hap1call[locationsplit[0]] = intersecthap1
+                        self.hap1call[locationsplit[0]] = intersecthap1.tolist()
                         self.percentmatchhap1[locationsplit[0]] = percentmatchhap1temp
-                        self.difhap1[locationsplit[0]] = np.setdiff1d(hap1,snps)
+                        self.difhap1[locationsplit[0]] = np.setdiff1d(hap1,snps).tolist()
                         print('Both Equal')
                         for key, value in self.hap1call.items():
                             print(key,value)
