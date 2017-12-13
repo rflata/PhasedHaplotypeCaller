@@ -50,10 +50,10 @@ class output:
             #print(key,value)
         return self.regionsbuilderhap2
 
-    def tofile(self,rb1,rb2,call,sample):
+    def tofile(self,rb1,rb2,call,sample,cwd,out):
         self.call = call
         self.sample = sample
-        with open('/mnt/c/Linux/Astrolabe.txt','w') as output:
+        with open(cwd + '/' + out + '.txt','w') as output:
             output.write(self.sample.rstrip() + '\n')
             output.write('Hap1: ')
             i = 0
