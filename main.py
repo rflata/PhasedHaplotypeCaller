@@ -16,8 +16,10 @@ def main():
     #print(vcfparse.sample)
     call = hc.haplotypecaller('SLCO1B1')
     call.buildhaplotype(vcfparse.get_hap1(),vcfparse.get_hap2())
-    out = oh.output(call,vcfparse.sample)
+    out = oh.output()
     regions = out.loadregions()
-    out.tofile(regions)
+    rb1 = out.buildregionshap1(regions,call)
+    rb2 = out.buildregionshap2(regions,call)
+    out.tofile(rb1,rb2,call,vcfparse.sample)
 if __name__ == "__main__":main()
 
