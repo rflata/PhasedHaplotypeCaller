@@ -21,6 +21,6 @@ def main():
     regions = out.loadregions()
     rb1 = out.buildregionshap1(regions,call)
     rb2 = out.buildregionshap2(regions,call)
-    out.tofile(rb1,rb2,call,vcfparse.sample,cwd,args.out)
+    out.tofile(rb1,rb2,call,vcfparse.sample,cwd,args.out,regions)
 if __name__ == "__main__":main()
 

@@ -25,12 +25,14 @@ class output:
         self.regionsbuilder = defaultdict(list)
         for hap, variant in self.call.hap1call.items():
             #print(hap)
+            #print(variant)
             for loc in variant:
                 for key,value in regions.items():
                     location = loc.split('~')
                     if int(location[1]) >= int(value[0]) and int(location[1]) <= int(value[1]):
                         self.regionsbuilder[key.rstrip()].append(loc)
-        #for key, value in regionsbuilder.items():
+            
+        #for key, value in self.regionsbuilder.items():
             #print(key,value)
         return self.regionsbuilder
 
@@ -50,7 +52,7 @@ class output:
             #print(key,value)
         return self.regionsbuilderhap2
 
-    def tofile(self,rb1,rb2,call,sample,cwd,out):
+    def tofile(self,rb1,rb2,call,sample,cwd,out,regions):
         self.call = call
         self.sample = sample
         with open(cwd + '/' + out + '.txt','w') as output:
@@ -59,10 +61,11 @@ class output:
             i = 0
             for key in self.call.hap1call.keys():
                 output.write(key)
-                if i < len(self.call.hap1call) and len(self.call.hap1call) > 1:
+                if i < len(self.call.hap1call) -1 and len(self.call.hap1call) > 1:
                     output.write(' or ')
+                else:
+                    output.write('\n')
                 i = i + 1
-                output.write('\n')
             output.write('Hap2: ')
             i = 0            
             for key in self.call.hap2call.keys():
@@ -78,38 +81,88 @@ class output:
                 output.write(hap + '\n')
                 output.write('Variants in Definitions' + '\n')
                 output.write('Total: ')
-                for x in variant:
-                    total = ','.join(variant)
-                output.write(total + '\n')
-                for key, value in rb1.items():
-                    output.write(key + '\n')
-                    output.write(','.join(value) + '\n')
-            for values in self.call.difhap1.values():
+                output.write(','.join(variant))
+                output.write('\n')
+                #for key, value in rb1.items():
+                    #output.write(key + '\n')
+                    #print(value)
+                    #output.write(','.join(value) + '\n')
+                #self.regionsbuilder = defaultdict(list)
+                #print(variant)
+                for loc in variant:
+                    self.regionsbuilder = defaultdict(list)
+                    for key,value in regions.items():
+                        location = loc.split('~')
+                        if int(location[1]) >= int(value[0]) and int(location[1]) <= int(value[1]):
+                            self.regionsbuilder[key.rstrip()].append(loc)
+                    for key, value in self.regionsbuilder.items():
+                        output.write(key + '\n')
+                        output.write(','.join(value) + '\n')
+                
+                dif = self.call.difhap1[hap]
                 output.write('Variants in Sample Only' + '\n')
                 output.write('Total: ')
-                for x in values:
-                    total = ','.join(values)
-                output.write(total + '\n')
+                output.write(','.join(dif))
+                output.write('\n')
+
+                for loc in dif:
+                    self.regionsbuilder = defaultdict(list)
+                    for key,value in regions.items():
+                        location = loc.split('~')
+                        if int(location[1]) >= int(value[0]) and int(location[1]) <= int(value[1]):
+                            self.regionsbuilder[key.rstrip()].append(loc)
+                    for key, value in self.regionsbuilder.items():
+                        output.write(key + '\n')
+                        output.write(','.join(value) + '\n')               
+            
+            #for key, values in self.call.difhap1.items():
+                #print(key)
+                #output.write('Variants in Sample Only' + '\n')
+                #output.write('Total: ')
+                #for x in values:
+                    #total = ','.join(values)
+                #output.write(total + '\n')
             for hap, variant in self.call.hap2call.items():
                 output.write('\n' + hap + '\n')
                 output.write('Variants in Definitions' + '\n')
                 output.write('Total: ')
+                
                 for x in variant:
                     total = ','.join(variant)
                 output.write(total + '\n')
-                for key, value in rb2.items():
-                    output.write(key + '\n')
-                    output.write(','.join(value) + '\n')
-            for values in self.call.difhap2.values():
+                
+                #for key, value in rb2.items():
+                    #output.write(key + '\n')
+                    #output.write(','.join(value) + '\n')
+                
+                for loc in variant:
+                    self.regionsbuilder = defaultdict(list)
+                    for key,value in regions.items():
+                        location = loc.split('~')
+                        if int(location[1]) >= int(value[0]) and int(location[1]) <= int(value[1]):
+                            self.regionsbuilder[key.rstrip()].append(loc)
+                    for key, value in self.regionsbuilder.items():
+                        output.write(key + '\n')
+                        output.write(','.join(value) + '\n')
+                
+                dif = self.call.difhap2[hap]
                 output.write('Variants in Sample Only' + '\n')
                 output.write('Total: ')
-                for x in values:
-                    total = ','.join(values)
-                output.write(total + '\n')              
+                output.write(','.join(dif))
+                output.write('\n')
 
-
-
-
-
-
-        
+                for loc in dif:
+                    self.regionsbuilder = defaultdict(list)
+                    for key,value in regions.items():
+                        location = loc.split('~')
+                        if int(location[1]) >= int(value[0]) and int(location[1]) <= int(value[1]):
+                            self.regionsbuilder[key.rstrip()].append(loc)
+                    for key, value in self.regionsbuilder.items():
+                        output.write(key + '\n')
+                        output.write(','.join(value) + '\n')
+            #for values in self.call.difhap2.values():
+                #output.write('Variants in Sample Only' + '\n')
+                #output.write('Total: ')
+                #for x in values:
+                    #total = ','.join(values)
+                #output.write(total + '\n')             
