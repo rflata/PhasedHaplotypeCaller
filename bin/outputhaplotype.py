@@ -55,7 +55,7 @@ class output:
     def tofile(self,rb1,rb2,call,sample,cwd,out,regions):
         self.call = call
         self.sample = sample
-        with open(cwd + '/' + out + '.txt','w') as output:
+        with open(out + '.txt','w') as output:
             output.write(self.sample.rstrip() + '\n')
             output.write('Hap1: ')
             i = 0
