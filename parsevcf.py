@@ -32,8 +32,10 @@ class parsevcf:
                     variant = split[9]
                     variantsplit = variant.split('|')
                     hap1temp = split[0] + '~' + split[1] + '~'+ split[1] + '~' + alt[int(variantsplit[0])-1]
-                    if variantsplit[0] != '0':
+                    if int(variantsplit[0]) != 0:
                         self.set_hap1(hap1temp)
                     hap2temp = split[0] + '~' + split[1] + '~'+ split[1] + '~' + alt[int(variantsplit[1])-1].strip('\n')
-                    if variantsplit[1] != '0':
+                    #print(variantsplit[1])
+                    if int(variantsplit[1]) != 0:
                         self.set_hap2(hap2temp)
+                        #print(self.hap2)
