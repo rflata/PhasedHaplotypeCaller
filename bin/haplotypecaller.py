@@ -1,6 +1,9 @@
+#HaployperCaller
+#Author: Ryan Lata
 import numpy as np
 
 class haplotypecaller:
+	#Haplotypecaller class contructor
 	def __init__(self,gene):
 		self.callhaplotypehap1 = gene + '*1'
 		#print(self.callhaplotypehap1)
@@ -14,12 +17,14 @@ class haplotypecaller:
 		self.percentmatchhap2 = {}
 		self.percentmatchhap2[self.callhaplotypehap2] = 0
 		self.difhap1 = {}
-		self.difhap2 = {}
+		self.difhap2 = {} 
+	#Function to build haplotype for each chromosome from phased VCF
 	def buildhaplotype(self,hap1,hap2):
 		self.difhap1[self.callhaplotypehap1] = hap1
 		self.difhap2[self.callhaplotypehap2] = hap2
-		with open('locationData.tsv') as locationData:    
-			if len(hap1) > 0:
+		with open('locationData.tsv') as locationData:
+			#Build Haplotype 1
+			if len(hap1) > 0: #Conditional for if there are no variants in the regions
 				for line in locationData:
 					if '#' not in line:
 						locationsplit = line.split('\t')
@@ -64,8 +69,12 @@ class haplotypecaller:
 							#print('Both Equal')
 							#for key, value in self.hap1call.items():
 								#print(key,value)
-			if len(hap2) > 0:
+			#Build Haplotype 2
+			#print(len(hap2))
+		with open('locationData.tsv') as locationData:
+			if len(hap2) > 0: #Conditional for if there are no variants in the regions
 				for line in locationData:
+					print(line)
 					if '#' not in line:
 						locationsplit = line.split('\t')
 						snps = locationsplit[1].split(',')
