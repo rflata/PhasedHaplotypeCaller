@@ -74,7 +74,7 @@ class haplotypecaller:
 		with open('locationData.tsv') as locationData:
 			if len(hap2) > 0: #Conditional for if there are no variants in the regions
 				for line in locationData:
-					print(line)
+					#print(line)
 					if '#' not in line:
 						locationsplit = line.split('\t')
 						snps = locationsplit[1].split(',')
