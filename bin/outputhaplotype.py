@@ -170,7 +170,7 @@ class output:
                     for key, value in self.regionsbuilder.items():
                         output.write(key + '\n')
                         output.write(','.join(value) + '\n')               
-            print(done)           
+            print('done')           
             #for hap, variant in self.call.hap2call.items():
                 #output.write('\n' + hap + '\n')
                 #output.write('Variants in Definitions' + '\n')
