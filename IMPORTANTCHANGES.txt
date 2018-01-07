@@ -1,0 +1,4 @@
+Change Log:
+Had to switch order of Reference allele in Reference VCF for *27 and *20
+*27 = 21355489
+*20 = 21391976
