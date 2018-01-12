@@ -62,7 +62,7 @@ class haplotypecaller:
 							#print(self.percentmatchhap1)
 							self.difhap1.clear()
 							self.difhap1[self.callhaplotypehap1] = np.setdiff1d(hap1,snps).tolist()                    
-						elif percentmatchhap1temp == self.percentmatchhap1[self.callhaplotypehap1] and len(intersecthap1) == len(self.hap1call[self.callhaplotypehap1]):
+						elif percentmatchhap1temp == self.percentmatchhap1[self.callhaplotypehap1] and len(intersecthap1) == len(self.hap1call[self.callhaplotypehap1]) and len(intersecthap1) != 0:
 							self.hap1call[locationsplit[0]] = intersecthap1.tolist()
 							self.percentmatchhap1[locationsplit[0]] = percentmatchhap1temp
 							self.difhap1[locationsplit[0]] = np.setdiff1d(hap1,snps).tolist()
@@ -109,7 +109,7 @@ class haplotypecaller:
 							#for key, value in self.hap1call.items():
 								#print('Both Greater')
 								#print(key,value)
-						elif percentmatchhap2temp == self.percentmatchhap2[self.callhaplotypehap2] and len(intersecthap2) == len(self.hap2call[self.callhaplotypehap2]):
+						elif percentmatchhap2temp == self.percentmatchhap2[self.callhaplotypehap2] and len(intersecthap2) == len(self.hap2call[self.callhaplotypehap2]) and len(intersecthap2) != 0:
 							self.hap2call[locationsplit[0]] = intersecthap2.tolist()
 							self.percentmatchhap2[locationsplit[0]] = percentmatchhap2temp
 							self.difhap2[locationsplit[0]] = np.setdiff1d(hap2,snps).tolist()
