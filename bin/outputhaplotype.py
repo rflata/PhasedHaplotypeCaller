@@ -1,16 +1,19 @@
-#PhasingAstrolabe
-#Author: Ryan Lata
-#Code to output data into a readable format
+"""
+PhasingAstrolabe
+Author: Ryan Lata
+Code to output data into a readable format
+"""
 
 from collections import defaultdict
 
 class output:
     def __init__(self):
-        pass
-    
+        self.regions = {}
+        self.call = None
+        self.sample = None
+        self.regionsbuilder = None
     #Function to load the defined regions of interest for the gene from the locationData file
     def loadregions(self):
-        self.regions = {}
         with open('locationData.tsv') as locationData:
             for line in locationData:
                 if '##REGION' in line:
@@ -19,7 +22,7 @@ class output:
                     line = line[1].split(';')
                     self.regions[line[1]] = line[0].split('-')
         return self.regions
-   
+
     #Deprecated functions
     #def buildregionshap1(self,regions,call):
     #    # print(self.sample)
@@ -34,7 +37,6 @@ class output:
     #                location = loc.split('~')
     #                if int(location[1]) >= int(value[0]) and int(location[1]) <= int(value[1]):
     #                    self.regionsbuilder[key.rstrip()].append(loc)
-    #        
     #    # for key, value in self.regionsbuilder.items():
     #        # print(key,value)
     #    return self.regionsbuilder
@@ -56,14 +58,14 @@ class output:
     #    return self.regionsbuilderhap2
 
     #Function for outputing data to a file
-    def tolist(self,call,sample,out,regions):
+    def tolist(self, call, sample, out, regions):
         self.call = call
         self.sample = sample
-        with open(out + '.txt','w') as output:
+        with open(out + '.txt', 'w') as output:
             output.write(self.sample.rstrip() + '\n')
             output.write('Hap1: ')
             i = 0
-            
+
             #Poor attempt to add or inbetween calls when no consensus is presence, it works...but likely is a better way
             for key in self.call.hap1call.keys():
                 output.write(key)
@@ -81,31 +83,31 @@ class output:
                     output.write(' or ')
                 else:
                     output.write('\n')
-                i = i + 1    
-            
+                i = i + 1
+
             #Some useful additional information to be included with the haplotype calls
             output.write('\n' + '--------------------------------------------------------------------------------------------------------------' + '\n')
             output.write('ADDITIONAL INFO' + '\n')
             output.write('--------------------------------------------------------------------------------------------------------------' + '\n')
-            
+
             for hap, variant in self.call.hap1call.items():
                 output.write(hap + '\t' + 'Percent Match: ' + str(call.percentmatchhap1[hap]) + '\t' + 'Variants in Definition: ' + str(len(variant)) + '\n')
                 output.write('Variants in Definitions' + '\n')
                 output.write('Total: ')
                 output.write(','.join(variant))
                 output.write('\n')
-                
+
                 #Checking the exon location of the variant
                 for loc in variant:
                     self.regionsbuilder = defaultdict(list)
-                    for key,value in regions.items():
+                    for key, value in regions.items():
                         location = loc.split('~')
                         if int(location[1]) >= int(value[0]) and int(location[1]) <= int(value[1]):
                             self.regionsbuilder[key.rstrip()].append(loc)
                     for key, value in self.regionsbuilder.items():
                         output.write(key + '\n')
                         output.write(','.join(value) + '\n')
-                
+
                 #Outputing variants that are not found in the consensus definition, but are found in the VCR
                 dif = self.call.difhap1[hap]
                 output.write('Variants in Sample Only' + '\n')
@@ -115,16 +117,16 @@ class output:
 
                 for loc in dif:
                     self.regionsbuilder = defaultdict(list)
-                    for key,value in regions.items():
+                    for key, value in regions.items():
                         location = loc.split('~')
                         if int(location[1]) >= int(value[0]) and int(location[1]) <= int(value[1]):
                             self.regionsbuilder[key.rstrip()].append(loc)
                     for key, value in self.regionsbuilder.items():
                         output.write(key + '\n')
-                        output.write(','.join(value) + '\n')               
+                        output.write(','.join(value) + '\n')
 
             output.write('\n')
-            
+
             for hap, variant in self.call.hap2call.items():
                 output.write(hap + '\t' + 'Percent Match: ' + str(call.percentmatchhap2[hap]) + '\t' + 'Variants in Definition: ' + str(len(variant)) + '\n')
                 output.write('Variants in Definitions' + '\n')
@@ -133,7 +135,7 @@ class output:
                 output.write('\n')
                 for loc in variant:
                     self.regionsbuilder = defaultdict(list)
-                    for key,value in regions.items():
+                    for key, value in regions.items():
                         location = loc.split('~')
                         if int(location[1]) >= int(value[0]) and int(location[1]) <= int(value[1]):
                             self.regionsbuilder[key.rstrip()].append(loc)
@@ -150,22 +152,22 @@ class output:
                 output.write('\n')
                 output.write('Total: ')
                 output.write(','.join(dif))
-                
+
                 for loc in dif:
                     self.regionsbuilder = defaultdict(list)
-                    for key,value in regions.items():
+                    for key, value in regions.items():
                         location = loc.split('~')
                         if int(location[1]) >= int(value[0]) and int(location[1]) <= int(value[1]):
                             self.regionsbuilder[key.rstrip()].append(loc)
                     for key, value in self.regionsbuilder.items():
                         output.write(key + '\n')
-                        output.write(','.join(value) + '\n')               
-            print('done')           
+                        output.write(','.join(value) + '\n')
+            print('done')
     #Option to output data as a CSV
-    def tocsv(self,call,sample,out,regions):
+    def tocsv(self, call, sample, out, regions):
         self.sample = sample
         self.call = call
-        with open(out + '.csv','w') as output:
+        with open(out + '.csv', 'w') as output:
             output.write(self.sample.rstrip() + ',')
             for key in self.call.hap1call.keys():
                 output.write(key)
@@ -181,7 +183,7 @@ class output:
                     output.write(' or ')
                 else:
                     output.write('\n')
-                i = i + 1             
+                i = i + 1
             for key, value in call.consensushap1.items():
                 output.write(key + ' Definition' + ',')
                 value = sorted(value)
@@ -194,7 +196,7 @@ class output:
                 dif = self.call.difhap1[hap]
                 output.write('Hap1 Sample Only,')
                 output.write(','.join(dif) + '\n')
-            
+
             for key, value in call.consensushap2.items():
                 output.write(key + ' Definition' + ',')
                 value = sorted(value)
@@ -203,7 +205,7 @@ class output:
             for hap, variant in self.call.hap2call.items():
                 output.write('Hap1 Call,')
                 output.write(','.join(variant) + '\n')
-                
+
                 dif = self.call.difhap2[hap]
                 output.write('Hap1 Sample Only,')
                 output.write(','.join(dif) + '\n')

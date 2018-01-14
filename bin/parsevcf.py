@@ -1,23 +1,28 @@
+"""
+ParseVCF
+Author:Ryan Lata
+Parses variants in a phased VCF file
+"""
 class parsevcf:
-    
+
     def __init__(self):
         self.hap1 = []
         self.hap2 = []
         self.sample = ''
     #Setter and getters for encapsulation of parsevcf variables (may remove at somepoint)
-    def set_hap1(self, x):
-        self.hap1.append(x)
-    
-    def set_hap2(self,x):
-        self.hap2.append(x)
-    
+    def set_hap1(self, variant):
+        self.hap1.append(variant)
+
+    def set_hap2(self, variant):
+        self.hap2.append(variant)
+
     def get_hap1(self):
         return self.hap1 
-    
+
     def get_hap2(self):
         return self.hap2
     #Function to read the user inputted VCF. Will only store phased variants in memory.
-    def readvcf(self,vcf):
+    def readvcf(self, vcf):
         with open(vcf) as vcf:
             for line in vcf:
                 #Getting the sample name from the VCF (may fail if VCF header is not inputted as expected)
@@ -27,7 +32,7 @@ class parsevcf:
                 #Looking at each position in the VCF file and storing variants sites from each chromosome in dictionaries.
                 if "#" not in line:
                     split = line.split('\t')
-                    ref = split[3]
+                    #ref = split[3]
                     alt = split[4]
                     alt = alt.split(',')
                     variant = split[9]
