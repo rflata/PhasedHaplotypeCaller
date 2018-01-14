@@ -166,8 +166,22 @@ class output:
         self.sample = sample
         self.call = call
         with open(out + '.csv','w') as output:
-            output.write(self.sample.rstrip() + '\n')
-            
+            output.write(self.sample.rstrip() + ',')
+            for key in self.call.hap1call.keys():
+                output.write(key)
+                i = 0
+                if i < len(self.call.hap1call) -1 and len(self.call.hap1call) > 1:
+                    output.write(' or ')
+                else:
+                    output.write('/')
+                i = i + 1
+            for key in self.call.hap2call.keys():
+                output.write(key)
+                if i < len(self.call.hap2call) -1 and len(self.call.hap2call) > 1:
+                    output.write(' or ')
+                else:
+                    output.write('\n')
+                i = i + 1             
             for key, value in call.consensushap1.items():
                 output.write(key + ' Definition' + ',')
                 value = sorted(value)
