@@ -203,9 +203,9 @@ class output:
                 output.write(','.join(value) + '\n') 
 
             for hap, variant in self.call.hap2call.items():
-                output.write('Hap1 Call,')
+                output.write('Hap2 Call,')
                 output.write(','.join(variant) + '\n')
 
                 dif = self.call.difhap2[hap]
-                output.write('Hap1 Sample Only,')
+                output.write('Hap2 Sample Only,')
                 output.write(','.join(dif) + '\n')
