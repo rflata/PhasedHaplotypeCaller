@@ -143,7 +143,7 @@ class output:
                         output.write(key + '\n')
                         output.write(','.join(value) + '\n')
                 output.write('Total: ')
-                output.write(','.join(variant))
+                output.write(','.join(variant) +'\n')
 
                 dif = self.call.difhap2[hap]
                 output.write('Variants in Sample Only' + '\n')
@@ -151,7 +151,7 @@ class output:
                 #output.write(','.join(dif))
                 output.write('\n')
                 output.write('Total: ')
-                output.write(','.join(dif))
+                output.write(','.join(dif) + '\n')
 
                 for loc in dif:
                     self.regionsbuilder = defaultdict(list)
@@ -169,27 +169,29 @@ class output:
         self.call = call
         with open(out + '.csv', 'w') as output:
             output.write(self.sample.rstrip() + ',')
+            i = 0
             for key in self.call.hap1call.keys():
                 output.write(key)
-                i = 0
-                if i < len(self.call.hap1call) -1 and len(self.call.hap1call) > 1:
+                if i < len(self.call.hap1call) - 1 and len(self.call.hap1call) > 1:
                     output.write(' or ')
-                else:
-                    output.write('/')
                 i = i + 1
+            output.write('/')
+            i = 0
             for key in self.call.hap2call.keys():
                 output.write(key)
                 if i < len(self.call.hap2call) -1 and len(self.call.hap2call) > 1:
                     output.write(' or ')
-                else:
-                    output.write('\n')
                 i = i + 1
-            for key, value in call.consensushap1.items():
-                output.write(key + ' Definition' + ',')
-                value = sorted(value)
-                output.write(','.join(value) + '\n') 
+            output.write('\n')
+            #for key, value in call.consensushap1.items():
+                #output.write(key + ' Definition' + ',')
+                #value = sorted(value)
+                #output.write(','.join(value) + '\n') 
 
             for hap, variant in self.call.hap1call.items():
+                output.write(hap + ' Definition' + ',')
+                value = sorted(call.consensushap1[hap])
+                output.write(','.join(value) + '\n')
                 output.write('Hap1 Call,')
                 output.write(','.join(variant) + '\n')
                 
@@ -197,12 +199,15 @@ class output:
                 output.write('Hap1 Sample Only,')
                 output.write(','.join(dif) + '\n')
 
-            for key, value in call.consensushap2.items():
-                output.write(key + ' Definition' + ',')
-                value = sorted(value)
-                output.write(','.join(value) + '\n') 
+            #for key, value in call.consensushap2.items():
+                #output.write(key + ' Definition' + ',')
+                #value = sorted(value)
+                #output.write(','.join(value) + '\n') 
 
             for hap, variant in self.call.hap2call.items():
+                output.write(hap + ' Definition' + ',')
+                value = sorted(call.consensushap2[hap])
+                output.write(','.join(value) + '\n')
                 output.write('Hap2 Call,')
                 output.write(','.join(variant) + '\n')
 
