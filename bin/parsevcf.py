@@ -36,7 +36,8 @@ class parsevcf:
                     alt = split[4]
                     alt = alt.split(',')
                     variant = split[9]
-                    variantsplit = variant.split('|')
+                    variant = variant.split(':')
+                    variantsplit = variant[0].split('|')
                     hap1temp = split[0] + '~' + split[1] + '~'+ split[1] + '~' + alt[int(variantsplit[0])-1]
                     if int(variantsplit[0]) != 0:
                         self.set_hap1(hap1temp)

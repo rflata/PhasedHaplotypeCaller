@@ -41,7 +41,7 @@ class haplotypecaller:
             #clear, and set it the current value
         # 4. If the percent match, and intersect are equal there is not consensus in the call,
             #append current value to dictionary do not clear the stored value
-    def buildhaplotype(self, hap1, hap2):
+    def buildhaplotype(self, hap1, hap2, definition):
         self.difhap1[self.callhaplotypehap1] = hap1
         self.difhap2[self.callhaplotypehap2] = hap2
         with open('locationData.tsv') as locationData:

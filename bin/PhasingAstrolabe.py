@@ -17,6 +17,7 @@ def main():
     parser.add_argument('-type', '--filetype', dest='type',
                         choices=['csv', 'list'],
                         help='Limits the output to csv or list format (Default = both')
+    parser.add_argument('-def', '--definitions',dest='definition',required=True)
     args = parser.parse_args()
 
     #Calling the parsevcf() constructor
@@ -28,7 +29,7 @@ def main():
     #obtained from the parsed VCF to the definition file.
     #Currenlty only functional for a single gene, but plan to expand it to multiple
     call = hc.haplotypecaller('SLCO1B1')
-    call.buildhaplotype(vcfparse.get_hap1(), vcfparse.get_hap2())
+    call.buildhaplotype(vcfparse.get_hap1(), vcfparse.get_hap2(),defintion)
     #Outputting the contstructed haplotypes to file
     out = oh.output()
     regions = out.loadregions()
